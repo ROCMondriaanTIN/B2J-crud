@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "db.php";
 
 global $db;
@@ -17,18 +18,25 @@ $categories = $query->fetchAll(PDO::FETCH_ASSOC);
     <title>Document</title>
 </head>
 <body>
+<?php
+if (isset($_SESSION['message'])){
+    echo $_SESSION['message'];
+}
+?>
 <table>
 <thead>
 <tr>
     <th scope="col">Naam</th>
     <th scope="col">Update</th>
+    <th scope="col">Delete</th>
 </tr>
 </thead>
 <tbody>
     <?php foreach ($categories as $category) : ?>
     <tr>
         <td><?= $category['naam'] ?></td>
-        <td><a href="update.php?id=<?= $category['id'] ?>">Update</a> </td>
+        <td><a href="update.php?id=<?= $category['id'] ?>">Update</a></td>
+        <td><a href="delete.php?id=<?=$category['id']?>">Delete</a></td>
     </tr>
     <?php endforeach; ?>
 </tbody>
